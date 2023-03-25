@@ -1,30 +1,80 @@
 {%extends 'base.html' %}
 
 {% block content %}
+  {% if user.is_authenticated %}
+  <div class="d-flex justify-content-center align-items-center pb-2 ">
+    <h1>RECORDS</h1>
+  </div>
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="bg-dark text-white">
+        <tr>
+          
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th> 
+            <th scope="col">State</th>
+            <th scope="col">zipcode</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if records %}
+          {% for record in records %}
+            <tr>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.id }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.first_name }} {{ record.last_name }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.email }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.phone }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.address }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.city }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.state }}
+              </a></td>
+              <td><a href="{% url 'record' record.id %}" style="text-decoration: none; color: black;">
+                  {{ record.zipcode }}
+              </a></td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+
+
+
+
+
+      
+<!-- Login Form  -->
+  {% else %}
 <div class="col-md-6 offset-md-3">
-
-{% if user.is_authenticated %}
-
-<h1>Hello world</h1>
-
-{% else %}
-
-<h1>Login</h1>
-    <br/>
-    <form method="POST" action="{% url 'home' %}">
-        {% csrf_token %}
-        <form>
-            <div class="mb-3">
-              <input type="text" class="form-control" name="username" placeholder="username" required>
-            </div>
-            <div class="mb-3">
-              <input type="password" class="form-control" name="password" placeholder="password" required>
-            </div>
-            <button type="submit" class="btn btn-secondary">Login</button>
-          </form>
-
-    </form>
+  <h1>Login</h1>
+  <br />
+  <form method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <input type="text" class="form-control" name="username" placeholder="username" required>
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" name="password" placeholder="password" required>
+    </div>
+    <button type="submit" class="btn btn-secondary">Login</button>
+  </form>
 </div>
+<!-- End Login Form  -->
 
 {% endif %}
 {%endblock%}
